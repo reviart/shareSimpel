@@ -14,6 +14,7 @@
             <input type="text" class="form-control form-control-lg" placeholder="{{ $datas->name }}" name="name">
           </div>
         </div>
+        <input type="hidden" class="form-control form-control-lg" name="status" value="edited">
         <button type="submit" class="btn btn-primary">
             Post edit
         </button>
