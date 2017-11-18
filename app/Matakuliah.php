@@ -5,17 +5,19 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class File extends Authenticatable
+class Matakuliah extends Authenticatable
 {
     use Notifiable;
-
+    public $primaryKey = 'kode_mk';
+    public $incrementing = false;
+    //public $table = 'matakuliahs';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'ext', 'size', 'status', 'user_id', 'kode_mk'
+        'kode_mk', 'nama_mk', 'sks', 'seksi', 'dosen', 'lecture_started', 'lecture_finished', 'user_id'
     ];
 
     public function user(){

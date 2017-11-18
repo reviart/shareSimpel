@@ -9,18 +9,18 @@ use Illuminate\Support\Facades\Storage;
 
 class FileController extends Controller
 {
-    public $red = "<meta http-equiv='refresh' content='2;URL=/file'/>";
+    public $red = "<meta http-equiv='refresh' content='2;URL=/files'/>";
 
     public function index(){
       $datas = DB::table('files')
         ->orderBy('updated_at', 'desc')
         ->get();
-      return view('upload.file', compact('datas'));
+      return view('file.index', compact('datas'));
     }
 
     public function show($id){
       $datas = File::find($id);
-      return view('upload.edit', compact('datas'));
+      return view('file.edit', compact('datas'));
     }
 
     public function store(Request $request)
@@ -28,11 +28,43 @@ class FileController extends Controller
       if ($request->hasFile('file')) {
         foreach ($request->file as $file) {
           $fileName = $file->getClientOriginalName();
-          $fileSize = $file->getClientSize();
           $fileExt  = $file->getClientOriginalExtension();
+          $fileSize = $file->getClientSize();
+          $getAssistant = $file->get('assistant');
+          $getKodemk = $file->get('kode_mk');
+
+          switch ($getKodemk) {
+            case 'C31040315':
+              $saveTo = "jarkom";
+              break;
+            case 'C31040311':
+              $saveTo = "sbd";
+              break;
+            case 'C31040203':
+              $saveTo = "pv";
+              break;
+            case 'C31040206':
+              $saveTo = "pbo";
+              break;
+            case 'C31040216':
+              $saveTo = "pc";
+              break;
+            case 'C31040309':
+              $saveTo = "tekan";
+              break;
+            case 'C31040306':
+              $saveTo = "simpel";
+              break;
+            case 'C31041403':
+              $saveTo = "rpw";
+              break;
+            default:
+              $saveTo = "";
+              break;
+          }
 
           //store to file
-          $file->storeAs('public/foto', $fileName);
+          $file->storeAs('public/'.$saveTo, $fileName);
 
           //store to db
           $fileObject = new File;
@@ -40,6 +72,8 @@ class FileController extends Controller
           $fileObject->ext = $fileExt;
           $fileObject->status = "not_edited";
           $fileObject->size = $fileSize;
+          $fileObject->user_id = $getAssistant;
+          $fileObject->kode_mk = $getKodemk;
           $fileObject->save();
 
           echo 'Upload success : '.$fileName.'<br>';
@@ -53,19 +87,6 @@ class FileController extends Controller
       return $msg;
     }
 
-    public function download($id){
-      $datas = File::find($id);
-
-      if ($datas->status == "edited") {
-        $msg = response()->download(storage_path("app/public/foto/".$datas->name.".".$datas->ext));
-      }
-      else {
-        $msg = response()->download(storage_path('app/public/foto/'.$datas->name));
-      }
-
-      return $msg;
-    }
-
     public function update(Request $request, $id){
       $datas = File::find($id);
       $tmpOldName = $datas->name;
@@ -74,24 +95,58 @@ class FileController extends Controller
 
       $tmpNewName = $request->get('name');
       $tmpNewStatus = $request->get('status');
+      $getAssistant = $request->get('assistant');
+      $getKodemk = $request->get('kode_mk');
+
+      switch ($getKodemk) {
+        case 'C31040315':
+          $saveTo = "jarkom";
+          break;
+        case 'C31040311':
+          $saveTo = "sbd";
+          break;
+        case 'C31040203':
+          $saveTo = "pv";
+          break;
+        case 'C31040206':
+          $saveTo = "pbo";
+          break;
+        case 'C31040216':
+          $saveTo = "pc";
+          break;
+        case 'C31040309':
+          $saveTo = "tekan";
+          break;
+        case 'C31040306':
+          $saveTo = "simpel";
+          break;
+        case 'C31041403':
+          $saveTo = "rpw";
+          break;
+        default:
+          $saveTo = "";
+          break;
+      }
 
       if ($tmpOldStatus == "edited") {
         Storage::move(
-          "public/foto/".$tmpOldName.".".$tmpOldExt,
-          "public/foto/".$tmpNewName.".".$tmpOldExt
+          "public/".$saveTo."/".$tmpOldName.".".$tmpOldExt,
+          "public/".$saveTo."/".$tmpNewName.".".$tmpOldExt
         );
         echo "File name changed from ".$tmpOldName.".".$tmpOldExt." to ".$tmpNewName.".".$tmpOldExt;
       }
       else {
         Storage::move(
-          "public/foto/".$tmpOldName,
-          "public/foto/".$tmpNewName.".".$tmpOldExt
+          "public/".$saveTo."/".$tmpOldName,
+          "public/".$saveTo."/".$tmpNewName.".".$tmpOldExt
         );
         echo "File name changed from ".$tmpOldName." to ".$tmpNewName.".".$tmpOldExt;
       }
 
       $datas->name = $tmpNewName;
       $datas->status = $tmpNewStatus;
+      $datas->user_id = $getAssistant;
+      $datas->kode_mk = $getKodemk;
       $datas->save();
 
       return $this->red;
@@ -102,17 +157,54 @@ class FileController extends Controller
       $tmpName = $datas->name;
       $tmpExt = $datas->ext;
       $tmpStatus = $datas->status;
+      $tmpKodemk = $datas->kode_mk;
+
+      switch ($tmpKodemk) {
+        case 'C31040315':
+          $dir = "jarkom";
+          break;
+        case 'C31040311':
+          $dir = "sbd";
+          break;
+        case 'C31040203':
+          $dir = "pv";
+          break;
+        case 'C31040206':
+          $dir = "pbo";
+          break;
+        case 'C31040216':
+          $dir = "pc";
+          break;
+        case 'C31040309':
+          $dir = "tekan";
+          break;
+        case 'C31040306':
+          $dir = "simpel";
+          break;
+        case 'C31041403':
+          $dir = "rpw";
+          break;
+        default:
+          $dir = "";
+          break;
+      }
 
       if ($tmpStatus == "edited") {
-        Storage::delete("public/foto/".$tmpName.".".$tmpExt);
+        Storage::delete("public/".$dir."/".$tmpName.".".$tmpExt);
         echo "File ".$tmpName.".".$tmpExt." deleted";
       }
       else{
-        Storage::delete('public/foto/'.$tmpName);
+        Storage::delete("public/".$dir."/".$tmpName);
         echo "File ".$tmpName." deleted";
       }
 
       $datas->delete();
       return $this->red;
     }
+
+    /*
+    catatan:
+    $saveTo = DB::table('files')
+                    ->join('matakuliahs', 'files.kode_mk', '=', 'matakuliahs.kode_mk')
+                    ->select('')*/
 }

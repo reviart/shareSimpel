@@ -29,7 +29,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                        {{ config('app.name', 'Modul simpel') }}
                     </a>
                 </div>
 
@@ -62,6 +62,12 @@
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
+                                    </li>
+                                    <li>
+                                      <a href="{{ route('matakuliah.index') }}">Matakuliah</a>
+                                    </li>
+                                    <li>
+                                      <a href="{{ route('jarkom.index') }}">Jarkom</a>
                                     </li>
                                 </ul>
                             </li>
