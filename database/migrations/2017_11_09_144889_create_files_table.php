@@ -19,11 +19,11 @@ class CreateFilesTable extends Migration
           $table->string('ext');
           $table->string('size');
           $table->enum('status', ['edited', 'not_edited']);
-          $table->unsignedInteger('user_id');
+          $table->string('user_nim');
           $table->string('kode_mk');
           $table->timestamps();
 
-          $table->foreign('user_id')->references('id')->on('users');
+          $table->foreign('user_nim')->references('nim')->on('users');
           $table->foreign('kode_mk')->references('kode_mk')->on('matakuliahs');
       });
     }

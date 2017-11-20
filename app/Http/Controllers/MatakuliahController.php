@@ -12,9 +12,8 @@ class MatakuliahController extends Controller
     public $red = "<meta http-equiv='refresh' content='2;URL=/matakuliah'/>";
 
     public function index(){
-      $datas = Matakuliah::all();
+      $datas = Matakuliah::orderBy('nama_mk')->get();
       return view('matakuliah.index', compact('datas'));
-      //return $datas;
     }
 
     public function create(){
@@ -35,41 +34,32 @@ class MatakuliahController extends Controller
         'seksi' => $request->get('seksi'),
         'dosen' => $request->get('dosen'),
         'seksi' => $request->get('seksi'),
+        'user_nim' => $request->get('assistant'),
         'lecture_started' => $request->get('lecture_started'),
-        'lecture_finished' => $request->get('lecture_finished'),
-        'user_id' => $request->get('assistant')
+        'lecture_finished' => $request->get('lecture_finished')
       ]);
       $mk->save();
-      return redirect()->route('matakuliah.index');
+      return redirect()->route('matakuliah.index')->with('status', 'One row created!');
     }
 
     public function update(Request $request, $kode_mk){
-      //$datas = Matakuliah::where('kode_mk', $kode_mk)->first();
       $datas = Matakuliah::find($kode_mk);
       $datas->update([
-      'kode_mk' => $request->get('kode_mk'),
-      'nama_mk' => $request->get('nama_mk'),
-      'sks' => $request->get('sks'),
-      'seksi' => $request->get('seksi'),
-      'dosen' => $request->get('dosen'),
-      'lecture_started' => $request->get('lecture_started'),
-      'lecture_finished' => $request->get('lecture_finished'),
-      'user_id' => $request->get('assistant')
+        'kode_mk' => $request->get('kode_mk'),
+        'nama_mk' => $request->get('nama_mk'),
+        'sks' => $request->get('sks'),
+        'seksi' => $request->get('seksi'),
+        'dosen' => $request->get('dosen'),
+        'user_nim' => $request->get('assistant'),
+        'lecture_started' => $request->get('lecture_started'),
+        'lecture_finished' => $request->get('lecture_finished')
       ]);
-      /*$this->matakuliah->kode_mk = $request->get('kode_mk');
-      $this->matakuliah->nama_mk = $request->get('nama_mk');
-      $this->matakuliah->sks = $request->get('sks');
-      $this->matakuliah->seksi = $request->get('seksi');
-      $this->matakuliah->dosen = $request->get('dosen');
-      $this->matakuliah->lecture_started = $request->get('lecture_started');
-      $this->matakuliah->lecture_finished = $request->get('lecture_finished');
-      $this->matakuliah->user_id = $request->get('assistant');*/
-
-
-      return redirect()->route('matakuliah.index')->with('status', 'Matakuliah updated!');
+      return redirect()->route('matakuliah.index')->with('status', 'One row updated!');
     }
 
-    public function destroy($id){
-
+    public function destroy($kode_mk){
+      $datas = Matakuliah::find($kode_mk);
+      $datas->delete();
+      return redirect()->route('matakuliah.index')->with('warning', 'One row deleted!');;
     }
 }

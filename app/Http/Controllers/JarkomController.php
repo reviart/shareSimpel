@@ -12,10 +12,7 @@ class JarkomController extends Controller
     public $red = "<meta http-equiv='refresh' content='2;URL=/jarkom'/>";
 
     public function index(){
-      $datas = DB::table('files')
-        ->where('kode_mk', '201')
-        ->orderBy('updated_at', 'desc')
-        ->get();
+      $datas = File::all();
       return view('jarkom.index', compact('datas'));
     }
 

@@ -15,7 +15,7 @@ class File extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'ext', 'size', 'status', 'user_id', 'kode_mk'
+        'name', 'ext', 'size', 'status', 'user_nim', 'kode_mk'
     ];
 
     public function user(){

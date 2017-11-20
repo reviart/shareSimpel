@@ -21,10 +21,10 @@ class CreateMatakuliahsTable extends Migration
           $table->string('dosen');
           $table->time('lecture_started');
           $table->time('lecture_finished');
-          $table->unsignedInteger('user_id');
+          $table->string('user_nim');
           $table->timestamps();
 
-          $table->foreign('user_id')->references('id')->on('users');
+          $table->foreign('user_nim')->references('nim')->on('users');
       });
     }
 

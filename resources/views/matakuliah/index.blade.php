@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.mk')
 
 @section('content')
 <div class="container">
@@ -6,14 +6,23 @@
       <div class="alert alert-success">
           {{ session('status') }}
       </div>
+  @elseif (session('warning'))
+      <div class="alert alert-warning">
+          {{ session('warning') }}
+      </div>
+  @else
   @endif
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Matakuliah</div>
+                <div class="panel-heading">
+                  Matakuliah
+                  <a href="{{route('matakuliah.store')}}" class="btn btn-primary">Tambah matakuliah</a>
+                </div>
 
-                <div class="panel-body">
-                  <table border="1">
+                <center>
+                  <div class="panel-body">
+                    <table border="1">
                     <tr>
                       <th>NO</th>
                       <th>KODE MK</th>
@@ -52,11 +61,15 @@
                       @endforeach
                     @else
                       <tr>
-                        <td colspan="8">There are no data.</td>
+                        <td colspan="9">
+                          <center>There are no data.</center>
+                        </td>
                       </tr>
                     @endif
                   </table>
-                </div>
+                  </div>
+                </center>
+
             </div>
         </div>
     </div>

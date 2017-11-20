@@ -17,7 +17,7 @@ class Matakuliah extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'kode_mk', 'nama_mk', 'sks', 'seksi', 'dosen', 'lecture_started', 'lecture_finished', 'user_id'
+        'kode_mk', 'nama_mk', 'sks', 'seksi', 'dosen', 'lecture_started', 'lecture_finished', 'user_nim'
     ];
 
     public function user(){

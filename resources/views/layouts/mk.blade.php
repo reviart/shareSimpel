@@ -67,7 +67,7 @@
                                       <a href="{{ route('matakuliah.index') }}">Matakuliah</a>
                                     </li>
                                     <li>
-                                      <a href="{{ route('jarkom.index') }}">Jarkom</a>
+                                      <a href="{{ route('jarkom') }}">Jarkom</a>
                                     </li>
                                 </ul>
                             </li>

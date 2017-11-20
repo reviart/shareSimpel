@@ -12,10 +12,11 @@ class FileController extends Controller
     public $red = "<meta http-equiv='refresh' content='2;URL=/files'/>";
 
     public function index(){
-      $datas = DB::table('files')
-        ->orderBy('updated_at', 'desc')
-        ->get();
-      return view('file.index', compact('datas'));
+      return view('file.index');
+    }
+
+    public function create(){
+        return view('file.store');
     }
 
     public function show($id){

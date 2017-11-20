@@ -11,7 +11,7 @@
                       {{ csrf_field() }}
                       {{ method_field('PUT') }}
 
-                      <input type="hidden" name="assistant" value="{{ Auth::user()->id }}">
+                      <input type="hidden" name="assistant" value="{{ Auth::user()->nim }}">
                       <div class="form-group{{ $errors->has('kode_mk') ? ' has-error' : '' }}">
                           <label for="kode_mk" class="col-md-4 control-label">KODE MK</label>
                           <div class="col-md-6">
@@ -101,7 +101,7 @@
                               <button type="submit" class="btn btn-primary">
                                   Save
                               </button>
-                              
+
                           </div>
                       </div>
                   </form>

@@ -17,7 +17,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//Public access
 Route::get('/matakuliah', 'MatakuliahController@index')->name('matakuliah.index');
+Route::get('/files', 'FileController@index')->name('file.index');
+Route::get('/down/{id}', 'FileController@download')->name('file.download');
+Route::get('/jarkom', 'FileController@index')->name('jarkom');
+Route::get('/sbd', 'FileController@index')->name('sbd');
+Route::get('/pv', 'FileController@index')->name('pv');
+Route::get('/pbo', 'FileController@index')->name('pbo');
+Route::get('/pc', 'FileController@index')->name('pc');
+Route::get('/tekan', 'FileController@index')->name('tekan');
+Route::get('/simpel', 'FileController@index')->name('simpel');
+Route::get('/rpw', 'FileController@index')->name('rpw');
+
+//Auth access
 Route::group(['prefix' => 'matakuliah', 'middleware' => 'auth'], function(){
   Route::get('/store', 'MatakuliahController@create')->name('matakuliah.store');
   Route::post('/store', 'MatakuliahController@store')->name('matakuliah.store.submit');
@@ -26,22 +39,10 @@ Route::group(['prefix' => 'matakuliah', 'middleware' => 'auth'], function(){
   Route::delete('/destroy/{kode_mk}', 'MatakuliahController@destroy')->name('matakuliah.destroy');
 });
 
-Route::get('/jarkom', 'JarkomController@index')->name('jarkom.index');
-Route::get('/down/{id}', 'JarkomController@download')->name('jarkom.download');
-
-Route::group(['prefix' => 'jarkom', 'middleware' => 'auth'], function(){
-  Route::post('/store', 'JarkomController@store')->name('jarkom.store');
-  Route::get('/edit/{id}', 'JarkomController@show')->name('jarkom.edit');
-  Route::put('/saveEdit/{kode_mk}', 'JarkomController@update')->name('jarkom.edit.submit');
-  Route::delete('/destroy/{kode_mk}', 'JarkomController@destroy')->name('jarkom.destroy');
-});
-
-Route::get('/sbd', 'SbdController@index')->name('sbd.index');
-Route::get('/down/{id}', 'SbdController@download')->name('sbd.download');
-
-Route::group(['prefix' => 'sbd', 'middleware' => 'auth'], function(){
-  Route::post('/store', 'SbdController@store')->name('sbd.store');
-  Route::get('/edit/{id}', 'SbdController@show')->name('sbd.edit');
-  Route::put('/saveEdit/{id}', 'SbdController@update')->name('sbd.edit.submit');
-  Route::delete('/destroy/{id}', 'SbdController@destroy')->name('sbd.destroy');
+Route::group(['prefix' => 'files', 'middleware' => 'auth'], function(){
+  Route::get('/store', 'FileController@create')->name('file.store');
+  Route::post('/store', 'FileController@store')->name('file.store.submit');
+  Route::get('/edit/{id}', 'FileController@show')->name('file.edit');
+  Route::put('/saveEdit/{id}', 'FileController@update')->name('file.edit.submit');
+  Route::delete('/destroy/{id}', 'FileController@destroy')->name('file.destroy');
 });

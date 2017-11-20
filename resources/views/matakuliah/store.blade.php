@@ -7,10 +7,10 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Matakuliah</div>
                 <div class="panel-body">
-                  <form class="form-horizontal" role="form" method="POST" action="{{ route('matakuliah.store') }}">
+                  <form class="form-horizontal" role="form" method="POST" action="{{ route('matakuliah.store.submit') }}">
                       {{ csrf_field() }}
 
-                      <input type="hidden" name="assistant" value="{{ Auth::user()->id }}">
+                      <input type="hidden" name="assistant" value="{{ Auth::user()->nim }}">
                       <div class="form-group{{ $errors->has('kode_mk') ? ' has-error' : '' }}">
                           <label for="kode_mk" class="col-md-4 control-label">KODE MK</label>
 
