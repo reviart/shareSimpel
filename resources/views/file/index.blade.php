@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
+
   @if (session('status'))
       <div class="alert alert-success">
           {{ session('status') }}
@@ -12,14 +13,16 @@
       </div>
   @else
   @endif
+
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                  Files
-                  <a href="{{route('file.store')}}" class="btn btn-primary">Tambah file</a>
+                  All File
+                  @if(Auth::user())
+                    <a href="{{ route('file.store') }}" data-toggle="modal" class="btn btn-primary">Tambah file</a>
+                  @endif
                 </div>
-
                 <center>
                   <div class="panel-body">
                     <table border="1">
@@ -43,7 +46,6 @@
                         $suffixes = array('', 'K', 'M', 'G', 'T');
                         $hasil = round(pow(1024, $base - floor($base)), 2) .' '. $suffixes[floor($base)];
                       ?>
-                      <tr>
                         <tr>
                           <td>{{$number += 1}}</td>
                           <td>{{$key->name}}</td>
@@ -63,7 +65,7 @@
                       @endforeach
                     @else
                       <tr>
-                        <td colspan="3">
+                        <td colspan="4">
                           <center>There are no data.</center>
                         </td>
                       </tr>
@@ -71,9 +73,9 @@
                   </table>
                   </div>
                 </center>
-
             </div>
         </div>
     </div>
+
 </div>
 @endsection

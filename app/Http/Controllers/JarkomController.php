@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use DB;
-use App\Jarkom;
+use App\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -12,8 +12,9 @@ class JarkomController extends Controller
     public $red = "<meta http-equiv='refresh' content='2;URL=/jarkom'/>";
 
     public function index(){
-      $datas = File::all();
-      return view('jarkom.index', compact('datas'));
+      //$datas = File::where('kode_mk', 'C31040315')->first();
+      $files = DB::table('files')->where('kode_mk', 'C31040315')->get();
+      return view('jarkom.index', compact('files'));
     }
 
     public function download($id){

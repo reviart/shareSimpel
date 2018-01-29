@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Modul simpel') }}</title>
+    <title>Modul simpel</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -29,7 +29,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Modul simpel') }}
+                        Modul simpel
                     </a>
                 </div>
 
@@ -43,8 +43,12 @@
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @if (Auth::guest())
+                            {{--
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
+                            --}}
+                            <li><a href="#">Upload Tugas</a></li>
+                            <li><a href="#">LAB . Simulasi pemodelan</a></li>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -52,23 +56,21 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
+                                  <li>
+                                    <a href="{{ route('matakuliah.index') }}">Matakuliah</a>
+                                    <a href="{{ route('file.index') }}">File</a>
+                                  </li>
+                                  <li>
+                                      <a href="{{ route('logout') }}"
+                                          onclick="event.preventDefault();
+                                                   document.getElementById('logout-form').submit();">
+                                          Logout
+                                      </a>
 
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                    <li>
-                                      <a href="{{ route('matakuliah.index') }}">Matakuliah</a>
-                                    </li>
-                                    <li>
-                                      <a href="{{ route('jarkom') }}">Jarkom</a>
-                                    </li>
+                                      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                          {{ csrf_field() }}
+                                      </form>
+                                  </li>
                                 </ul>
                             </li>
                         @endif
